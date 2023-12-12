@@ -1,4 +1,4 @@
-from fastapi import APIRouter,HTTPException
+from fastapi import APIRouter
 from models.affiliate import Affiliate
 from config.database import collection_name
 from schema.schemas import list_serial
@@ -18,12 +18,8 @@ async def create_affiliates(affiliate:Affiliate):
 
 @router.get("/calculate_commission/{affiliate_id}")
 async def calculate_commission(affiliate_id: str, sales_amount: float):
-    try:
-        a = collection_name.find_one({"_id": ObjectId(affiliate_id)})
-        if not a:
-            raise HTTPException(status_code=404, detail="Affiliate not found")
-
-        commission = sales_amount * rate
-        return {"affiliate_id": affiliate_id, "commission_amount": commission}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
+    a=collection_name.find_one({"_id": ObjectId(affiliate_id)})
+    if affiliate_id is not a :
+        return {"message": "Affiliate not found"}
+    commission = sales_amount * rate
+    return {"affiliate_id": affiliate_id, "commission_amount": commission}
