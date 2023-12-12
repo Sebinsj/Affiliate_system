@@ -17,7 +17,7 @@ async def create_affiliates(affiliate:Affiliate):
 
 @router.get("/calculate_commission/{affiliate_id}")
 async def calculate_commission(affiliate_id: str, sales_amount: float):
-    a=collection_name.find_one({"_id": ObjectId(affiliate_id)})
+    a=collection_name.find_one({"_id": affiliate_id)})
     if  not a :
         return {"message": "Affiliate not found"}
 
