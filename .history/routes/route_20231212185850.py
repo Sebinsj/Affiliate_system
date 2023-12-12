@@ -5,7 +5,6 @@ from schema.schemas import list_serial
 from bson import ObjectId
 
 router =APIRouter()
-rate=0.1
 
 @router.get("/")
 async def get_affiliates():
@@ -21,5 +20,5 @@ async def calculate_commission(affiliate_id: str, sales_amount: float):
     a=collection_name.find_one({"_id": ObjectId(affiliate_id)})
     if  not a :
         return {"message": "Affiliate not found"}
-    commission = sales_amount * rate
+    commission = sales_amount * 
     return {"affiliate_id": affiliate_id, "commission_amount": commission}

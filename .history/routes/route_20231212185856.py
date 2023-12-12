@@ -5,7 +5,7 @@ from schema.schemas import list_serial
 from bson import ObjectId
 
 router =APIRouter()
-rate=0.1
+rate=
 
 @router.get("/")
 async def get_affiliates():

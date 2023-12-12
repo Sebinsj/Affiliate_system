@@ -5,7 +5,6 @@ from schema.schemas import list_serial
 from bson import ObjectId
 
 router =APIRouter()
-rate=0.1
 
 @router.get("/")
 async def get_affiliates():
@@ -18,8 +17,12 @@ async def create_affiliates(affiliate:Affiliate):
 
 @router.get("/calculate_commission/{affiliate_id}")
 async def calculate_commission(affiliate_id: str, sales_amount: float):
-    a=collection_name.find_one({"_id": ObjectId(affiliate_id)})
-    if  not a :
-        return {"message": "Affiliate not found"}
-    commission = sales_amount * rate
-    return {"affiliate_id": affiliate_id, "commission_amount": commission}
+    try:
+        a = collection_name.find_one({"_id": ObjectId(affiliate_id)})
+        if not a:
+            raise HTTPException(status_code=404, detail="Affiliate not found")
+
+        commission = sales_amount * 0.1  # Replace with your commission calculation logic
+        return {"affiliate_id": affiliate_id, "commission_amount": commission}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
