@@ -18,6 +18,7 @@ async def create_affiliates(affiliate:Affiliate):
 
 @router.get("/calculate_commission/{affiliate_id}")
 async def calculate_commission(affiliate_id: str, sales_amount: float):
+    
         a = collection_name.find_one({"_id": ObjectId(affiliate_id)})
         if not a:
             raise HTTPException(status_code=404, detail="Affiliate not found")
